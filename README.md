@@ -37,10 +37,7 @@ This Shipping API is built to demonstrate basic CRUD operations, authentication,
 
 6. Run database migrations and seeders:
    ```bash
-   php artisan migrate --seed```
-
-Note: The seeder
-
+   php artisan migrate --seed
 
 ## Configuration
 
