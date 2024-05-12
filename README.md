@@ -1,64 +1,117 @@
-# Shipping API
+Shipment Backend Service
+============
 
+REQUIREMENTS
+------------
 
-## Introduction
+- PHP 8.2
+- MySQL 8.4
+- Composer 2.0
+- Redis 6.2
+- Node.js 14.16.1
 
-This Shipping API is built to demonstrate basic CRUD operations, authentication, and API functionalities for a shipment company
+Installation
+------------
 
-## Requirements
+> You need to have [docker](http://www.docker.com) (20.10.10) and
+[docker-compose](https://docs.docker.com/compose/install/) (1.29.2) installed.
 
-- PHP >= 8.2
-- Composer
-- MySQL
-- Redis
-- Docker (optional, for Dockerized deployment)
+1. Clone app from [git repository](https://github.com/jgodstime/shipment-api-laravel.git)
+2. Go to the root of the project and run following commands:
 
-## Installation
+```sh 
+cp .env.example .env
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/jgodstime/shipment-api
+3. Create docker network
 
-2. Navigate to the project directory:
-   ```bash
-   cd shipment-api
+```sh
+docker network create shipment
+```
 
-3. Install PHP dependencies:
-   ```bash
-   composer install
+5. Build docker
 
-4. Copy the .env.example file and configure your environment variables:
-   ```bash
-   cp .env.example .env
+```sh
+docker-compose build
+```
 
-5. Generate application key:
-   ```bash
-   php artisan key:generate
+6. Run docker
 
-6. Run database migrations and seeders:
-   ```bash
-   php artisan migrate --seed
+```sh
+docker-compose up -d
+```
 
-## Configuration
+7. Enter to the php docker container
 
-- Update the .env file with your database connection details and other configuration options.
+```sh
+docker-compose exec php bash
+```
 
-  Dont forget to set the SHIPMENT_RATE_PER_KG= 
+8. Install composer dependencies, generate key, run migrations with seeds
 
-## Usage
+```sh
+composer install --prefer-dist
+php artisan key:generate
+php artisan migrate:fresh --seed
+```
 
-- Start the Laravel development server with the command below and visit http://127.0.0.1:8000
-   ```bash
-   php artisan serve
+9. App will be available on http://shipment-backend.local:9660 url
 
-## Note
+Useful tips
+===========
 
-- Login credentials for Admin 
+To connect to MySQL server use following credentials:
 
-``` js
-{
-    "email": admin@gmail.com
-    "password": password
-}
+```
+hostname: 127.0.0.1
+port: 3324
+username: docker
+password: secret
+```
 
+To connect to your exiting MySQL database , edit your database credentials in `.env` but replace the host with the
+following:
 
+```
+DB_HOST=host.docker.internal
+```
+
+To run test, run this command:
+
+```
+pat
+```
+
+Rebuild docker containers if they already exists
+===========
+
+This may be required if new dependencies have been added to the project or container. After the last changes were
+pulled:
+
+- if new dependencies were added both to the container and project:
+
+```sh
+docker-compose down
+docker-compose build  (in rare cases with --no-cache)
+```
+
+Then run docker and enter to it
+
+```sh
+docker-compose up -d
+docker-compose exec php bash
+```
+
+Install new project dependencies if they exist and update migrations (inside docker container)
+
+```sh
+composer install --prefer-dist
+php artisan migrate
+```
+
+- if dependencies were added only to the project:
+
+```sh
+composer install --prefer-dist
+php artisan migrate
+```
