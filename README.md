@@ -76,11 +76,6 @@ following:
 DB_HOST=host.docker.internal
 ```
 
-To run test, run this command:
-
-```
-pat
-```
 
 Rebuild docker containers if they already exists
 ===========
