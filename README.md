@@ -55,7 +55,7 @@ php artisan key:generate
 php artisan migrate:fresh --seed
 ```
 
-9. App will be available on http://shipment-backend.local:9660 url
+9. App will be available on http://shipment-backend.local:9662 url
 
 Useful tips
 ===========
