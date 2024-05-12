@@ -115,3 +115,12 @@ php artisan migrate
 composer install --prefer-dist
 php artisan migrate
 ```
+
+- Login credentials for Admin
+
+``` js
+{
+    "email": admin@gmail.com
+    "password": password
+}
+```
